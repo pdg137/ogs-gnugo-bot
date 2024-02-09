@@ -1,5 +1,6 @@
-This is a [Nix](https://nixos.org/) package that sets up a simple bot,
-using [gtp2ogs](https://github.com/online-go/gtp2ogs) and
+This is a simple [Nix](https://nixos.org/) package that sets up an
+[OGS](https://online-go.com/) bot, using
+[gtp2ogs](https://github.com/online-go/gtp2ogs) and
 [GnuGo](https://www.gnu.org/software/gnugo/) on the back end.
 
 To build it, first install nix and set up an OGS bot. By default, the
