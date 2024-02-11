@@ -4,46 +4,40 @@
 
 let
   pkgs = import <nixpkgs> {};
-
+  gtp2ogs = import ./gtp2ogs.nix pkgs;
+  apikey = builtins.getEnv "APIKEY";
 in
-  pkgs.stdenv.mkDerivation rec {
-    name = "ogs-gnugo-bot";
-    buildInputs = with pkgs; [ ];
+with pkgs;
 
-    # Import packages locked to specific versions.
-    gtp2ogs = import ./gtp2ogs.nix pkgs;
-    gnugo = import ./gnugo38.nix pkgs;
+  stdenv.mkDerivation rec {
+    name = "ogs-gnugo-bot";
 
     config =
-      let
-        apikey = builtins.getEnv "APIKEY";
-      in
-        assert apikey != "";
-        pkgs.writeTextFile {
-          name = "gtp2ogs-config.json";
-          text = ''
-            {
-              apikey: "${apikey}",
-              engine: "GNU Go 3.8",
-              hidden: true,
-              bot: {
-                command: ["${gnugo}/bin/gnugo", "--mode", "gtp"]
-              },
-              greeting: {
-                en: "Hi! I am a bot powered by ${gnugo.name}, ${gtp2ogs.name}, and nixos-${builtins.substring 0 5 pkgs.lib.version}."
-              },
-              farewell: {
-                en: "Thanks for the game!"
-              },
-            }
-          '';
-        };
+      assert apikey != "";
+      assert gnugo.name == "gnugo-3.8";
+      writeTextFile {
+        name = "gtp2ogs-config.json";
+        text = ''
+          {
+            apikey: "${apikey}",
+            bot: {
+              command: ["${gnugo}/bin/gnugo", "--mode", "gtp"]
+            },
+            greeting: {
+              en: "Hi! I am a bot powered by ${gnugo.name}, ${gtp2ogs.name}, and nixos-${builtins.substring 0 5 pkgs.lib.version}."
+            },
+            farewell: {
+              en: "Thanks for the game!"
+            },
+          }
+        '';
+      };
 
-    ogs-gnugo-bot = pkgs.writeShellScript "ogs-gnugo-bot" ''
+    ogs-gnugo-bot = writeShellScript "ogs-gnugo-bot" ''
       ${gtp2ogs}/bin/gtp2ogs -c ${config}
     '';
 
-    builder = pkgs.writeShellScript "builder.sh" ''
+    builder = writeShellScript "builder.sh" ''
       source $stdenv/setup
       cp ${ogs-gnugo-bot} $out
     '';
