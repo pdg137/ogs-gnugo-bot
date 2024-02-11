@@ -19,6 +19,8 @@ let
       text = ''[{"gtp2ogs":"${version}"}]'';
     };
 
+    # Required settings for downloading to work.
+    buildInputs = with pkgs; [ cacert ];
     outputHashMode = "recursive";
     outputHashAlgo = "sha256";
     outputHash = hash;
