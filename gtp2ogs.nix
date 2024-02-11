@@ -8,19 +8,20 @@
 # to force Nix to download new files and compute a new one.
 
 pkgs:
+with pkgs;
 let
   version = "8.0.3";
   hash = "sha256-VTBBdlVOtnp4NHmv//1Ia4Uj1p6CAQhKQ7vP4itJEzg=";
 
-  gtp2ogs-builder = pkgs.runCommand "gtp2ogs-builder" {
-    node2nix = pkgs.node2nix;
-    package = pkgs.writeTextFile {
+  gtp2ogs-builder = runCommand "gtp2ogs-builder" {
+    node2nix = node2nix;
+    package = writeTextFile {
       name = "gtp2ogs-package.json";
       text = ''[{"gtp2ogs":"${version}"}]'';
     };
 
     # Required settings for downloading to work.
-    buildInputs = with pkgs; [ cacert ];
+    buildInputs = [ cacert ];
     outputHashMode = "recursive";
     outputHashAlgo = "sha256";
     outputHash = hash;
