@@ -6,6 +6,7 @@ let
   pkgs = import <nixpkgs> {};
   gtp2ogs = import ./gtp2ogs.nix pkgs;
   apikey = builtins.getEnv "APIKEY";
+  gnugo-level1 = import ./gnugo-level1.nix;
 in
 with pkgs;
 
@@ -14,17 +15,17 @@ with pkgs;
 
     config =
       assert apikey != "";
-      assert gnugo.name == "gnugo-3.8";
+      assert gnugo-level1.name == "gnugo-3.8";
       writeTextFile {
         name = "gtp2ogs-config.json";
         text = ''
           {
             apikey: "${apikey}",
             bot: {
-              command: ["${gnugo}/bin/gnugo", "--mode", "gtp"]
+              command: ["${gnugo-level1}/bin/gnugo", "--mode", "gtp"]
             },
             greeting: {
-              en: "Hi! I am a bot powered by ${gnugo.name}, ${gtp2ogs.name}, and nixos-${builtins.substring 0 5 pkgs.lib.version}."
+              en: "Hi! I am a bot powered by ${gnugo-level1.name}, ${gtp2ogs.name}, and nixos-${builtins.substring 0 5 pkgs.lib.version}."
             },
             farewell: {
               en: "Thanks for the game!"

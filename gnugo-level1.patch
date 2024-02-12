@@ -1,0 +1,12 @@
+diff -r -u gnugo-3.8/engine/clock.c gnugo-3.8-new/engine/clock.c
+--- gnugo-3.8/engine/clock.c	2009-02-17 13:41:31.000000000 -0800
++++ gnugo-3.8-new/engine/clock.c	2024-02-11 21:11:19.456571504 -0800
+@@ -44,7 +44,7 @@
+ static int level             = DEFAULT_LEVEL; /* current level */
+ static int level_offset      = 0;
+ static int min_level         = 0;
+-static int max_level         = gg_max(DEFAULT_LEVEL, 10);
++static int max_level         = gg_max(DEFAULT_LEVEL, 1);
+ 
+ 
+ /*************************/
