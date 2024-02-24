@@ -1,0 +1,45 @@
+diff -ruN fuego-1.1/fuegomain/FuegoMainUtil.cpp fuego-1.1.new/fuegomain/FuegoMainUtil.cpp
+--- fuego-1.1/fuegomain/FuegoMainUtil.cpp	2011-01-23 10:35:08.000000000 -0800
++++ fuego-1.1.new/fuegomain/FuegoMainUtil.cpp	2024-02-24 06:39:59.655095945 -0800
+@@ -22,7 +22,7 @@
+ {
+     path normalizedFile = file;
+     normalizedFile.normalize();
+-    string nativeFile = normalizedFile.native_file_string();
++    string nativeFile = normalizedFile.string();
+     SgDebug() << "Loading opening book from '" << nativeFile << "'... ";
+     ifstream in(nativeFile.c_str());
+     if (! in)
+diff -ruN fuego-1.1/go/GoGtpEngine.cpp fuego-1.1.new/go/GoGtpEngine.cpp
+--- fuego-1.1/go/GoGtpEngine.cpp	2011-03-05 03:09:01.000000000 -0800
++++ fuego-1.1.new/go/GoGtpEngine.cpp	2024-02-24 06:38:29.261762423 -0800
+@@ -378,7 +378,7 @@
+     CheckMaxClearBoard();
+     if (! m_sentinelFile.empty() && exists(m_sentinelFile))
+         throw GtpFailure() << "Detected sentinel file '"
+-                           << m_sentinelFile.native_file_string() << "'";
++                           << m_sentinelFile.string() << "'";
+     if (Board().MoveNumber() > 0)
+         GameFinished();
+     Init(Board().Size());
+diff -ruN fuego-1.1/gtpengine/GtpEngine.h fuego-1.1.new/gtpengine/GtpEngine.h
+--- fuego-1.1/gtpengine/GtpEngine.h	2011-01-23 10:35:02.000000000 -0800
++++ fuego-1.1.new/gtpengine/GtpEngine.h	2024-02-24 06:00:53.436766986 -0800
+@@ -44,7 +44,7 @@
+     opponent's time.
+     Enabling this macro adds a dependency on the Boost.Thread library.
+     @see GtpEngine::Ponder() */
+-#define GTPENGINE_PONDER 1
++#define GTPENGINE_PONDER 0
+ #endif
+ 
+ #ifndef GTPENGINE_INTERRUPT
+@@ -53,7 +53,7 @@
+     Interrupt() to interrupt a running command.
+     Enabling this macro adds a dependency on the Boost.Thread library.
+     @see GtpEngine::Interrupt() */
+-#define GTPENGINE_INTERRUPT 1
++#define GTPENGINE_INTERRUPT 0
+ #endif
+ 
+ //----------------------------------------------------------------------------
