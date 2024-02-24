@@ -1,7 +1,8 @@
 pkgs:
 let
-  # nixpkgs release-15.09, the last one to include boost 1.57,
-  # which is the last verison that seems to work with fuego.
+
+  # We build with nixpkgs release-15.09, the last one to include boost
+  # 1.57, which is the last verison that seems to work with Fuego.
   old-nixpkgs = import (fetchTarball {
     url = "https://github.com/NixOS/nixpkgs/archive/cc7c26173149348ba43f0799fac3f3823a2d21fc.tar.gz";
     sha256 = "sha256:1pgsqjw7qfsiivy5hvvslw48mamq5w3zs2jnwaixn657rh509v86";
@@ -11,9 +12,11 @@ let
 
   boost = old-pkgs.boost157;
 
-  in
+in
+
   old-pkgs.stdenv.mkDerivation {
     name = "fuego";
+
     buildInputs = [
       boost
     ];
@@ -23,10 +26,7 @@ let
       hash = "sha256-xh0YKTZww83ozIt7KK4DeoWkuAGIJ/Kg+T40sWW8Fs4=";
     };
 
-    # 1. Disables threading support. Fuego still needs Boost to
-    # configure, but I think it won't use it.
-    #
-    # 2. Fixes mistakes in smartgame library.
+    # Patch to fix a few mistakes
     patch = ./fuego-1.1.patch;
 
     patchPhase = ''

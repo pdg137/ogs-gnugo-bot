@@ -12,7 +12,7 @@ diff -ruN fuego-1.1/fuegomain/FuegoMainUtil.cpp fuego-1.1.new/fuegomain/FuegoMai
      if (! in)
 diff -ruN fuego-1.1/go/GoGtpEngine.cpp fuego-1.1.new/go/GoGtpEngine.cpp
 --- fuego-1.1/go/GoGtpEngine.cpp	2011-03-05 03:09:01.000000000 -0800
-+++ fuego-1.1.new/go/GoGtpEngine.cpp	2024-02-24 06:38:29.261762423 -0800
++++ fuego-1.1.new/go/GoGtpEngine.cpp	2024-02-24 08:24:23.585884471 -0800
 @@ -378,7 +378,7 @@
      CheckMaxClearBoard();
      if (! m_sentinelFile.empty() && exists(m_sentinelFile))
@@ -22,27 +22,27 @@ diff -ruN fuego-1.1/go/GoGtpEngine.cpp fuego-1.1.new/go/GoGtpEngine.cpp
      if (Board().MoveNumber() > 0)
          GameFinished();
      Init(Board().Size());
-diff -ruN fuego-1.1/gtpengine/GtpEngine.h fuego-1.1.new/gtpengine/GtpEngine.h
---- fuego-1.1/gtpengine/GtpEngine.h	2011-01-23 10:35:02.000000000 -0800
-+++ fuego-1.1.new/gtpengine/GtpEngine.h	2024-02-24 06:00:53.436766986 -0800
-@@ -44,7 +44,7 @@
-     opponent's time.
-     Enabling this macro adds a dependency on the Boost.Thread library.
-     @see GtpEngine::Ponder() */
--#define GTPENGINE_PONDER 1
-+#define GTPENGINE_PONDER 0
- #endif
- 
- #ifndef GTPENGINE_INTERRUPT
-@@ -53,7 +53,7 @@
-     Interrupt() to interrupt a running command.
-     Enabling this macro adds a dependency on the Boost.Thread library.
-     @see GtpEngine::Interrupt() */
--#define GTPENGINE_INTERRUPT 1
-+#define GTPENGINE_INTERRUPT 0
- #endif
- 
- //----------------------------------------------------------------------------
+@@ -1608,7 +1608,7 @@
+     // Call GoPlayer::Ponder() after 0.2 seconds delay to avoid calls in very
+     // short intervals between received commands
+     boost::xtime time;
+-    boost::xtime_get(&time, boost::TIME_UTC);
++    boost::xtime_get(&time, boost::TIME_UTC_);
+     bool aborted = false;
+     for (int i = 0; i < 200; ++i)
+     {
+diff -ruN fuego-1.1/gtpengine/GtpEngine.cpp fuego-1.1.new/gtpengine/GtpEngine.cpp
+--- fuego-1.1/gtpengine/GtpEngine.cpp	2011-01-23 10:35:02.000000000 -0800
++++ fuego-1.1.new/gtpengine/GtpEngine.cpp	2024-02-24 08:16:48.618395328 -0800
+@@ -349,7 +349,7 @@
+     {
+         cerr << "GtpEngine: sleep " << seconds << '\n';
+         xtime time;
+-        xtime_get(&time, boost::TIME_UTC);
++        xtime_get(&time, boost::TIME_UTC_);
+         time.sec += seconds;
+         thread::sleep(time);
+         cerr << "GtpEngine: sleep done\n";
 diff -ruN fuego-1.1/smartgame/SgHash.h fuego-1.1.new/smartgame/SgHash.h
 --- fuego-1.1/smartgame/SgHash.h	2011-01-23 10:34:58.000000000 -0800
 +++ fuego-1.1.new/smartgame/SgHash.h	2024-02-24 08:01:46.851747216 -0800
