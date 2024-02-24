@@ -5,12 +5,13 @@
 let
   pkgs = import <nixpkgs> {};
   gtp2ogs = import ./gtp2ogs.nix pkgs;
+  fuego = import ./fuego.nix pkgs;
   apikey = builtins.getEnv "APIKEY";
 in
 with pkgs;
 
   stdenv.mkDerivation rec {
-    name = "ogs-gnugo-bot";
+    name = "ogs-fuego-bot";
 
     config =
       assert apikey != "";
@@ -21,10 +22,14 @@ with pkgs;
           {
             apikey: "${apikey}",
             bot: {
-              command: ["${gnugo}/bin/gnugo", "--mode", "gtp"]
+              command: ["${fuego}/bin/fuego"]
+            },
+            ending_bot: {
+              command: ["${gnugo}/bin/gnugo", "--mode", "gtp"],
+              moves_to_allow_before_checking_ratio: 0.3
             },
             greeting: {
-              en: "Hi! I am a bot powered by ${gnugo.name}, ${gtp2ogs.name}, and nixos-${builtins.substring 0 5 pkgs.lib.version}."
+              en: "Hi! I am a bot powered by ${fuego.name}, ${gtp2ogs.name}, and nixos-${builtins.substring 0 5 pkgs.lib.version}."
             },
             farewell: {
               en: "Thanks for the game!"

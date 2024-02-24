@@ -1,4 +1,3 @@
-(
 pkgs:
 let
 
@@ -17,7 +16,7 @@ let
 in
 
   old-pkgs.stdenv.mkDerivation {
-    name = "fuego";
+    name = "fuego-1.1";
 
     buildInputs = [
       boost
@@ -48,4 +47,3 @@ in
       CXXFLAGS=-fpermissive ./configure --prefix=$out $configureArgs
       '';
   }
-) (import <nixpkgs> {})
