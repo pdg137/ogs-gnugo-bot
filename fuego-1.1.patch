@@ -43,3 +43,15 @@ diff -ruN fuego-1.1/gtpengine/GtpEngine.h fuego-1.1.new/gtpengine/GtpEngine.h
  #endif
  
  //----------------------------------------------------------------------------
+diff -ruN fuego-1.1/smartgame/SgHash.h fuego-1.1.new/smartgame/SgHash.h
+--- fuego-1.1/smartgame/SgHash.h	2011-01-23 10:34:58.000000000 -0800
++++ fuego-1.1.new/smartgame/SgHash.h	2024-02-24 08:01:46.851747216 -0800
+@@ -271,7 +271,7 @@
+ }
+ 
+ template<int N>
+-std::ostream& operator>>(std::istream& in, const SgHash<N>& hash)
++std::istream& operator>>(std::istream& in, const SgHash<N>& hash)
+ {
+     std::string str;
+     in >> str;

@@ -1,16 +1,15 @@
-# pkgs:
+pkgs:
 let
-  # nixpkgs release-14.12
+  # nixpkgs release-15.09, the last one to include boost 1.57,
+  # which is the last verison that seems to work with fuego.
   old-nixpkgs = import (fetchTarball {
-    url = "https://github.com/NixOS/nixpkgs/archive/770822493e3962d795739fafd522e771bfe06e3d.tar.gz";
-    sha256 = "sha256:197y3gqs0rzlwkr9i1hazrhkmg81kz6za3rn1ljw789x5zabh3dg";
+    url = "https://github.com/NixOS/nixpkgs/archive/cc7c26173149348ba43f0799fac3f3823a2d21fc.tar.gz";
+    sha256 = "sha256:1pgsqjw7qfsiivy5hvvslw48mamq5w3zs2jnwaixn657rh509v86";
   });
 
   old-pkgs = old-nixpkgs {};
 
-  boost = old-pkgs.boost;
-
-  pkgs = import <nixpkgs> {};
+  boost = old-pkgs.boost157;
 
   in
   old-pkgs.stdenv.mkDerivation {
