@@ -10,6 +10,21 @@ diff -ruN fuego-1.1/fuegomain/FuegoMainUtil.cpp fuego-1.1.new/fuegomain/FuegoMai
      SgDebug() << "Loading opening book from '" << nativeFile << "'... ";
      ifstream in(nativeFile.c_str());
      if (! in)
+diff -ruN fuego-1.1/go/GoBoardUtil.cpp fuego-1.1.new/go/GoBoardUtil.cpp
+--- fuego-1.1/go/GoBoardUtil.cpp	2011-01-23 10:35:06.000000000 -0800
++++ fuego-1.1.new/go/GoBoardUtil.cpp	2024-02-24 08:45:41.951739483 -0800
+@@ -53,9 +53,9 @@
+     if (c != SG_EMPTY && ! deadStones.Contains(p))
+     {
+         if (c == SG_BLACK)
+-            ++isBlackAdjacent;
++            isBlackAdjacent = ! isBlackAdjacent;
+         else
+-            ++isWhiteAdjacent;
++            isWhiteAdjacent = ! isWhiteAdjacent;
+         return;
+     }
+     if (! marker.NewMark(p))
 diff -ruN fuego-1.1/go/GoGtpEngine.cpp fuego-1.1.new/go/GoGtpEngine.cpp
 --- fuego-1.1/go/GoGtpEngine.cpp	2011-03-05 03:09:01.000000000 -0800
 +++ fuego-1.1.new/go/GoGtpEngine.cpp	2024-02-24 08:24:23.585884471 -0800
@@ -55,3 +70,27 @@ diff -ruN fuego-1.1/smartgame/SgHash.h fuego-1.1.new/smartgame/SgHash.h
  {
      std::string str;
      in >> str;
+diff -ruN fuego-1.1/smartgame/SgUctSearch.cpp fuego-1.1.new/smartgame/SgUctSearch.cpp
+--- fuego-1.1/smartgame/SgUctSearch.cpp	2011-03-13 00:07:38.000000000 -0800
++++ fuego-1.1.new/smartgame/SgUctSearch.cpp	2024-02-24 08:39:54.960069060 -0800
+@@ -418,7 +418,7 @@
+     {
+         auto_ptr<SgUctThreadState> state(
+                                       m_threadStateFactory->Create(i, *this));
+-        shared_ptr<Thread> thread(new Thread(*this, state));
++        boost::shared_ptr<Thread> thread(new Thread(*this, state));
+         m_threads.push_back(thread);
+     }
+     m_tree.CreateAllocators(m_numberThreads);
+diff -ruN fuego-1.1/smartgame/SgUctTree.cpp fuego-1.1.new/smartgame/SgUctTree.cpp
+--- fuego-1.1/smartgame/SgUctTree.cpp	2011-01-23 10:34:58.000000000 -0800
++++ fuego-1.1.new/smartgame/SgUctTree.cpp	2024-02-24 08:43:41.084237993 -0800
+@@ -455,7 +455,7 @@
+     if (m_current->HasChildren())
+     {
+         SgUctChildIterator* it = new SgUctChildIterator(m_tree, *m_current);
+-        m_stack.push(shared_ptr<SgUctChildIterator>(it));
++        m_stack.push(boost::shared_ptr<SgUctChildIterator>(it));
+         m_current = &(**it);
+         return;
+     }

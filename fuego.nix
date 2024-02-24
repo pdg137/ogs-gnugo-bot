@@ -1,8 +1,10 @@
+(
 pkgs:
 let
 
   # We build with nixpkgs release-15.09, the last one to include boost
   # 1.57, which is the last verison that seems to work with Fuego.
+  # Also, we could not get it to work with newer C++ compiler versions.
   old-nixpkgs = import (fetchTarball {
     url = "https://github.com/NixOS/nixpkgs/archive/cc7c26173149348ba43f0799fac3f3823a2d21fc.tar.gz";
     sha256 = "sha256:1pgsqjw7qfsiivy5hvvslw48mamq5w3zs2jnwaixn657rh509v86";
@@ -26,7 +28,9 @@ in
       hash = "sha256-xh0YKTZww83ozIt7KK4DeoWkuAGIJ/Kg+T40sWW8Fs4=";
     };
 
-    # Patch to fix a few mistakes
+    # Patch to fix a few mistakes that broke compilations. Some
+    # changes might only be necessary for it to work on more recent
+    # nixpkgs versions, which we did not fully get to work.
     patch = ./fuego-1.1.patch;
 
     patchPhase = ''
@@ -44,3 +48,4 @@ in
       CXXFLAGS=-fpermissive ./configure --prefix=$out $configureArgs
       '';
   }
+) (import <nixpkgs> {})
