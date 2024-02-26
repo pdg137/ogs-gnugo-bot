@@ -26,7 +26,8 @@ with pkgs;
             },
             ending_bot: {
               command: ["${gnugo}/bin/gnugo", "--mode", "gtp"],
-              moves_to_allow_before_checking_ratio: 0.1
+              moves_to_allow_before_checking_ratio: 0.1,
+              send_chats: false
             },
             greeting: {
               en: "Hi! I am a bot powered by ${fuego.name}, ${gtp2ogs.name}, and nixos-${builtins.substring 0 5 pkgs.lib.version}."
