@@ -36,4 +36,15 @@ in
     configurePhase = ''
       CXXFLAGS=-fpermissive ./configure --prefix=$out $configureArgs
       '';
+
+    buildPhase = ''
+      make
+      make -C unittestmain/ fuego_unittest
+      '';
+
+    installPhase = ''
+      mkdir -p $out/bin
+      make install
+      cp unittestmain/fuego_unittest $out/bin
+      '';
   }
