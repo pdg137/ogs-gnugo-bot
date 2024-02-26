@@ -1,6 +1,18 @@
+diff -ruN fuego-1.1/fuegomain/FuegoMain.cpp fuego-1.1.new/fuegomain/FuegoMain.cpp
+--- fuego-1.1/fuegomain/FuegoMain.cpp	2011-01-23 10:35:08.000000000 -0800
++++ fuego-1.1.new/fuegomain/FuegoMain.cpp	2024-02-25 20:41:32.547401317 -0800
+@@ -62,7 +62,7 @@
+ {
+     if (programPath == 0)
+         return "";
+-    return path(programPath, boost::filesystem::native).branch_path();
++    return path(programPath).branch_path();
+ }
+ 
+ void Help(po::options_description& desc, ostream& out)
 diff -ruN fuego-1.1/fuegomain/FuegoMainUtil.cpp fuego-1.1.new/fuegomain/FuegoMainUtil.cpp
 --- fuego-1.1/fuegomain/FuegoMainUtil.cpp	2011-01-23 10:35:08.000000000 -0800
-+++ fuego-1.1.new/fuegomain/FuegoMainUtil.cpp	2024-02-24 06:39:59.655095945 -0800
++++ fuego-1.1.new/fuegomain/FuegoMainUtil.cpp	2024-02-25 15:42:04.653394100 -0800
 @@ -22,7 +22,7 @@
  {
      path normalizedFile = file;
@@ -12,7 +24,7 @@ diff -ruN fuego-1.1/fuegomain/FuegoMainUtil.cpp fuego-1.1.new/fuegomain/FuegoMai
      if (! in)
 diff -ruN fuego-1.1/go/GoBoardUtil.cpp fuego-1.1.new/go/GoBoardUtil.cpp
 --- fuego-1.1/go/GoBoardUtil.cpp	2011-01-23 10:35:06.000000000 -0800
-+++ fuego-1.1.new/go/GoBoardUtil.cpp	2024-02-24 08:45:41.951739483 -0800
++++ fuego-1.1.new/go/GoBoardUtil.cpp	2024-02-25 15:42:04.653394100 -0800
 @@ -53,9 +53,9 @@
      if (c != SG_EMPTY && ! deadStones.Contains(p))
      {
@@ -27,7 +39,7 @@ diff -ruN fuego-1.1/go/GoBoardUtil.cpp fuego-1.1.new/go/GoBoardUtil.cpp
      if (! marker.NewMark(p))
 diff -ruN fuego-1.1/go/GoGtpEngine.cpp fuego-1.1.new/go/GoGtpEngine.cpp
 --- fuego-1.1/go/GoGtpEngine.cpp	2011-03-05 03:09:01.000000000 -0800
-+++ fuego-1.1.new/go/GoGtpEngine.cpp	2024-02-24 08:24:23.585884471 -0800
++++ fuego-1.1.new/go/GoGtpEngine.cpp	2024-02-25 15:42:04.653394100 -0800
 @@ -378,7 +378,7 @@
      CheckMaxClearBoard();
      if (! m_sentinelFile.empty() && exists(m_sentinelFile))
@@ -48,7 +60,75 @@ diff -ruN fuego-1.1/go/GoGtpEngine.cpp fuego-1.1.new/go/GoGtpEngine.cpp
      {
 diff -ruN fuego-1.1/gtpengine/GtpEngine.cpp fuego-1.1.new/gtpengine/GtpEngine.cpp
 --- fuego-1.1/gtpengine/GtpEngine.cpp	2011-01-23 10:35:02.000000000 -0800
-+++ fuego-1.1.new/gtpengine/GtpEngine.cpp	2024-02-24 08:16:48.618395328 -0800
++++ fuego-1.1.new/gtpengine/GtpEngine.cpp	2024-02-25 15:44:16.623354124 -0800
+@@ -118,9 +118,9 @@
+ /** Utility functions for Boost.Thread. */
+ namespace {
+ 
+-void Notify(mutex& aMutex, condition& aCondition)
++  void Notify(boost::mutex& aMutex, condition& aCondition)
+ {
+-    mutex::scoped_lock lock(aMutex);
++    boost::mutex::scoped_lock lock(aMutex);
+     aCondition.notify_all();
+ }
+ 
+@@ -167,15 +167,15 @@
+ 
+     barrier m_threadReady;
+ 
+-    mutex m_startPonderMutex;
++    boost::mutex m_startPonderMutex;
+ 
+-    mutex m_ponderFinishedMutex;
++    boost::mutex m_ponderFinishedMutex;
+ 
+     condition m_startPonder;
+ 
+     condition m_ponderFinished;
+ 
+-    mutex::scoped_lock m_ponderFinishedLock;
++    boost::mutex::scoped_lock m_ponderFinishedLock;
+ 
+     /** The thread to run the ponder function.
+         Order dependency: must be constructed as the last member, because the
+@@ -190,7 +190,7 @@
+ 
+ void PonderThread::Function::operator()()
+ {
+-    mutex::scoped_lock lock(m_ponderThread.m_startPonderMutex);
++    boost::mutex::scoped_lock lock(m_ponderThread.m_startPonderMutex);
+     m_ponderThread.m_threadReady.wait();
+     while (true)
+     {
+@@ -281,15 +281,15 @@
+ 
+     barrier m_threadReady;
+ 
+-    mutex m_waitCommandMutex;
++    boost::mutex m_waitCommandMutex;
+ 
+     condition m_waitCommand;
+ 
+-    mutex m_commandReceivedMutex;
++    boost::mutex m_commandReceivedMutex;
+ 
+     condition m_commandReceived;
+ 
+-    mutex::scoped_lock m_commandReceivedLock;
++    boost::mutex::scoped_lock m_commandReceivedLock;
+ 
+     /** The thread to run the read command function.
+         Order dependency: must be constructed as the last member, because the
+@@ -304,7 +304,7 @@
+ 
+ void ReadThread::Function::operator()()
+ {
+-    mutex::scoped_lock lock(m_readThread.m_waitCommandMutex);
++    boost::mutex::scoped_lock lock(m_readThread.m_waitCommandMutex);
+     m_readThread.m_threadReady.wait();
+     GtpEngine& engine = m_readThread.m_engine;
+     GtpInputStream& in = m_readThread.m_in;
 @@ -349,7 +349,7 @@
      {
          cerr << "GtpEngine: sleep " << seconds << '\n';
@@ -60,7 +140,7 @@ diff -ruN fuego-1.1/gtpengine/GtpEngine.cpp fuego-1.1.new/gtpengine/GtpEngine.cp
          cerr << "GtpEngine: sleep done\n";
 diff -ruN fuego-1.1/smartgame/SgHash.h fuego-1.1.new/smartgame/SgHash.h
 --- fuego-1.1/smartgame/SgHash.h	2011-01-23 10:34:58.000000000 -0800
-+++ fuego-1.1.new/smartgame/SgHash.h	2024-02-24 08:01:46.851747216 -0800
++++ fuego-1.1.new/smartgame/SgHash.h	2024-02-25 15:42:04.653394100 -0800
 @@ -271,7 +271,7 @@
  }
  
@@ -72,7 +152,28 @@ diff -ruN fuego-1.1/smartgame/SgHash.h fuego-1.1.new/smartgame/SgHash.h
      in >> str;
 diff -ruN fuego-1.1/smartgame/SgUctSearch.cpp fuego-1.1.new/smartgame/SgUctSearch.cpp
 --- fuego-1.1/smartgame/SgUctSearch.cpp	2011-03-13 00:07:38.000000000 -0800
-+++ fuego-1.1.new/smartgame/SgUctSearch.cpp	2024-02-24 08:39:54.960069060 -0800
++++ fuego-1.1.new/smartgame/SgUctSearch.cpp	2024-02-25 19:55:13.058329482 -0800
+@@ -78,9 +78,9 @@
+     return nodesPerTree;
+ }
+ 
+-void Notify(mutex& aMutex, condition& aCondition)
++void Notify(boost::mutex& aMutex, condition& aCondition)
+ {
+-    mutex::scoped_lock lock(aMutex);
++    boost::mutex::scoped_lock lock(aMutex);
+     aCondition.notify_all();
+ }
+ 
+@@ -191,7 +191,7 @@
+     if (DEBUG_THREADS)
+         SgDebug() << "SgUctSearch::Thread: starting thread "
+                   << m_state->m_threadId << '\n';
+-    mutex::scoped_lock lock(m_startPlayMutex);
++    boost::mutex::scoped_lock lock(m_startPlayMutex);
+     m_threadReady.wait();
+     while (true)
+     {
 @@ -418,7 +418,7 @@
      {
          auto_ptr<SgUctThreadState> state(
@@ -84,7 +185,7 @@ diff -ruN fuego-1.1/smartgame/SgUctSearch.cpp fuego-1.1.new/smartgame/SgUctSearc
      m_tree.CreateAllocators(m_numberThreads);
 diff -ruN fuego-1.1/smartgame/SgUctTree.cpp fuego-1.1.new/smartgame/SgUctTree.cpp
 --- fuego-1.1/smartgame/SgUctTree.cpp	2011-01-23 10:34:58.000000000 -0800
-+++ fuego-1.1.new/smartgame/SgUctTree.cpp	2024-02-24 08:43:41.084237993 -0800
++++ fuego-1.1.new/smartgame/SgUctTree.cpp	2024-02-25 15:42:04.653394100 -0800
 @@ -455,7 +455,7 @@
      if (m_current->HasChildren())
      {
