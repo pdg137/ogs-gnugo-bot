@@ -58,6 +58,20 @@ diff -ruN fuego-1.1/go/GoGtpEngine.cpp fuego-1.1.new/go/GoGtpEngine.cpp
      bool aborted = false;
      for (int i = 0; i < 200; ++i)
      {
+diff -ruN fuego-1.1/gouct/GoUctUtil.cpp fuego-1.1.new/gouct/GoUctUtil.cpp
+--- fuego-1.1/gouct/GoUctUtil.cpp	2011-01-23 10:35:03.000000000 -0800
++++ fuego-1.1.new/gouct/GoUctUtil.cpp	2024-02-26 19:51:15.612527049 -0800
+@@ -27,7 +27,9 @@
+ 
+ bool IsRectEmpty(const GoBoard& bd, int left, int right, int top, int bottom)
+ {
+-    for (SgRectIterator it(SgRect(left, right, top, bottom)); it; ++it)
++    // must assign this to a variable or it fails for unknown reason
++    SgRect rect = SgRect(left, right, top, bottom);
++    for (SgRectIterator it(rect); it; ++it)
+         if (! bd.IsEmpty(*it))
+             return false;
+     return true;
 diff -ruN fuego-1.1/gtpengine/GtpEngine.cpp fuego-1.1.new/gtpengine/GtpEngine.cpp
 --- fuego-1.1/gtpengine/GtpEngine.cpp	2011-01-23 10:35:02.000000000 -0800
 +++ fuego-1.1.new/gtpengine/GtpEngine.cpp	2024-02-25 15:44:16.623354124 -0800
