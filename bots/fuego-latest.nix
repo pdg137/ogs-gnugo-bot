@@ -1,3 +1,10 @@
+# Derivation that builds the latest Fuego version.  Also installs
+# fuego_unittest, which you can run to test the build.
+#
+# See: https://fuego.sourceforge.net/
+#
+# Usage: import fuego-latest.nix (import <nixpkgs> {})
+
 pkgs:
 let
 
@@ -5,8 +12,8 @@ let
 
 in
 
-  pkgs.stdenv.mkDerivation {
-    name = "fuego-r2038";
+  pkgs.stdenv.mkDerivation rec {
+    name = pkgs.lib.concatStrings ["fuego-r" src.rev];
 
     buildInputs = [
       boost

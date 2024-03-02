@@ -5,18 +5,16 @@
 let
   pkgs = import <nixpkgs> {};
   gtp2ogs = import ./gtp2ogs.nix pkgs;
-  fuego = import ./fuego.nix pkgs;
+  fuego = import ./bots/fuego-latest.nix pkgs;
+  gnugo = import ./bots/gnugo-3.8.nix pkgs;
   apikey = builtins.getEnv "APIKEY";
 in
-with pkgs;
-
-  stdenv.mkDerivation rec {
+  pkgs.stdenv.mkDerivation rec {
     name = "ogs-fuego-bot";
 
     config =
       assert apikey != "";
-      assert gnugo.name == "gnugo-3.8";
-      writeTextFile {
+      pkgs.writeTextFile {
         name = "gtp2ogs-config.json";
         text = ''
           {
@@ -40,12 +38,12 @@ with pkgs;
         '';
       };
 
-    ogs-gnugo-bot = writeShellScript "ogs-gnugo-bot" ''
+    bot = pkgs.writeShellScript "ogs-gnugo-bot" ''
       ${gtp2ogs}/bin/gtp2ogs -c ${config} --beta
     '';
 
-    builder = writeShellScript "builder.sh" ''
+    builder = pkgs.writeShellScript "builder.sh" ''
       source $stdenv/setup
-      cp ${ogs-gnugo-bot} $out
+      cp ${bot} $out
     '';
   }
