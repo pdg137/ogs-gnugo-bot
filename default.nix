@@ -35,6 +35,7 @@ with pkgs;
             farewell: {
               en: "Thanks for the game!"
             },
+            allowed_board_sizes: "square",
           }
         '';
       };

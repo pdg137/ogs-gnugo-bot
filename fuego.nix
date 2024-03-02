@@ -31,7 +31,7 @@ in
       aclocal
       autoheader
       autoreconf -i
-      CXXFLAGS=-fpermissive ./configure --prefix=$out $configureArgs
+      ./configure --prefix=$out $configureArgs
       '';
 
     buildPhase = ''

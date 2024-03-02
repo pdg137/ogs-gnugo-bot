@@ -10,8 +10,8 @@
 pkgs:
 with pkgs;
 let
-  version = "8.0.3";
-  hash = "sha256-VTBBdlVOtnp4NHmv//1Ia4Uj1p6CAQhKQ7vP4itJEzg=";
+  version = "8.0.4";
+  hash = "sha256-UccWcFR/Pm6YQZ4SvY+VJmBr2b/iG1iYqz7UxsXYMFY=";
 
   gtp2ogs-builder = runCommand "gtp2ogs-builder" {
     node2nix = node2nix;
