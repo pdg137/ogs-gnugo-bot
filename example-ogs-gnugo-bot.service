@@ -1,0 +1,13 @@
+[Unit]
+Description=OGS GnuGo Bot
+After=network.target
+
+[Service]
+User=paul
+ExecStart=/home/myuser/gitprojects/public/ogs-gnugo-bot/ogs-gnugo-bot
+Type=exec
+Restart=always
+
+
+[Install]
+WantedBy=default.target
