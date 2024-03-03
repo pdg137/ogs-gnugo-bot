@@ -30,6 +30,21 @@ let
              en: "Thanks for the game!"
            },
            allowed_board_sizes: "square",
+           allowed_live_settings: {
+               simple: {
+                   per_move_time_range: [10, 300],
+               },
+               byoyomi: {
+                   main_time_range: [0, 3600],
+                   period_time_range: [10, 300],
+                   periods_range: [1, 10],
+               },
+               fischer: {
+                   max_time_range: [30, 600],
+                   time_increment_range: [10, 300],
+               },
+               concurrent_games: 1,
+           },
         }
       '';
     };

@@ -7,6 +7,5 @@ ExecStart=/home/paul/gitprojects/ogs-gnugo-bot/gnugo-nixbot
 Type=exec
 Restart=always
 
-
 [Install]
 WantedBy=default.target
