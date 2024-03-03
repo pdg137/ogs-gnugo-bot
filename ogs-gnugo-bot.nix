@@ -5,7 +5,7 @@
 let
   pkgs = import <nixpkgs> {};
   gtp2ogs = import ./gtp2ogs.nix pkgs;
-  gnugo = import ./bots/gnugo-3.8.nix pkgs;
+  gnugo = import ./engines/gnugo-3.8.nix pkgs;
   apikey = builtins.getEnv "APIKEY";
 
   config =

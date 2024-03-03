@@ -5,8 +5,8 @@
 let
   pkgs = import <nixpkgs> {};
   gtp2ogs = import ./gtp2ogs.nix pkgs;
-  fuego = import ./bots/fuego-latest.nix pkgs;
-  gnugo = import ./bots/gnugo-3.8.nix pkgs;
+  fuego = import ./engines/fuego-latest.nix pkgs;
+  gnugo = import ./engines/gnugo-3.8.nix pkgs;
   apikey = builtins.getEnv "APIKEY";
 
   config =
