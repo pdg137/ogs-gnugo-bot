@@ -1,6 +1,6 @@
 # Build this to install a OGS GnuGo bot. Run it like this:
 #
-# APIKEY=<apikey> nix-build ogs-fuego-bot.nix -o ogs-fuego-bot
+# APIKEY=<apikey> nix-build fuego-nixbot.nix -o fuego-nixbot
 
 let
   pkgs = import <nixpkgs> {};
@@ -39,6 +39,6 @@ in
   {
     ogs-fuego-bot =
       pkgs.writeShellScript "ogs-fuego-bot" ''
-        ${gtp2ogs}/bin/gtp2ogs -c ${config} --beta
+        ${gtp2ogs}/bin/gtp2ogs -c ${config}
       '';
   }

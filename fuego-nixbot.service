@@ -1,0 +1,12 @@
+[Unit]
+After=network.target
+
+[Service]
+User=paul
+ExecStart=/home/paul/gitprojects/ogs-gnugo-bot/fuego-nixbot
+Type=exec
+Restart=always
+
+
+[Install]
+WantedBy=default.target

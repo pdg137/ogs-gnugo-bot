@@ -1,6 +1,6 @@
-# Build this to install a OGS GnuGo bot. Run it like this:
+# Build this to install gnugo-nixbot. Run it like this:
 #
-# APIKEY=<apikey> nix-build ogs-gnugo-bot.nix -o ogs-gnugo-bot
+# APIKEY=<apikey> nix-build gnugo-nixbot.nix -o gnugo-nixbot
 
 let
   pkgs = import <nixpkgs> {};
@@ -31,5 +31,5 @@ let
 in
   assert apikey != "";
   pkgs.writeShellScript "ogs-gnugo-bot" ''
-    ${gtp2ogs}/bin/gtp2ogs -c ${config} --beta
+    ${gtp2ogs}/bin/gtp2ogs -c ${config}
   ''
