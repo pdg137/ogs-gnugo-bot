@@ -52,3 +52,11 @@ To build the Fuego bot, run
 ```sh
 APIKEY=<apikey> nix-build ogs-fuego-bot.nix -o ogs-fuego-bot
 ```
+
+## Building Katago-based bot
+
+To build the Katago bot, run
+
+```sh
+APIKEY=<apikey> nix-build ogs-katago-bot.nix -o ogs-katago-bot
+```
