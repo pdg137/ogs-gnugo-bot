@@ -29,7 +29,7 @@ let
              send_chats: false
            },
            farewell: {
-             en: "Thanks for the game!"
+             en: "Thanks for the game!  If you won, please try again with a larger handicap."
            },
            allowed_board_sizes: [3,4,5,6,7,8,9,10,11,12,14]
         }
@@ -41,6 +41,6 @@ in
   {
     ogs-random-move-bot =
       pkgs.writeShellScript "ogs-random-move-bot" ''
-        ${gtp2ogs}/bin/gtp2ogs -c ${config}
+        ${gtp2ogs}/bin/gtp2ogs -c ${config} --beta
       '';
   }
