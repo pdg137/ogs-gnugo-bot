@@ -20,7 +20,7 @@ let
              command: ["${random-move-bot}"]
            },
            greeting: {
-             en: "Hi! I am a bot powered by ${random-move-bot.name}, ${gtp2ogs.name}, and nixos-${builtins.substring 0 5 pkgs.lib.version}."
+             en: "Hi! I am a bot powered by ${random-move-bot.name}, ${gtp2ogs.name}, and nixos-${builtins.substring 0 5 pkgs.lib.version}.  I use ${gnugo.name} to help with passing and resigning."
            },
            ending_bot: {
              command: ["${gnugo}/bin/gnugo", "--mode", "gtp"],
