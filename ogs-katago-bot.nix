@@ -5,8 +5,8 @@
 
 let
   pkgs = import <nixpkgs> {};
-  gtp2ogs = import ./gtp2ogs.nix pkgs;
-  katago = import ./engines/katago.nix pkgs;
+  gtp2ogs = import ./gtp2ogs.nix {pkgs = pkgs;};
+  katago = import ./engines/katago.nix {pkgs = pkgs;};
   apikey = builtins.getEnv "APIKEY";
 
   config =

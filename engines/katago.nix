@@ -3,10 +3,8 @@
 # and work on any computer but is very weak.
 #
 # See: https://github.com/lightvector/KataGo
-#
-# Usage: import ./katago.nix (import <nixpkgs> {})
 
-pkgs:
+{pkgs ? (import <nixpkgs> {})}:
 
 let
   katago-executable = pkgs.katago.override {
