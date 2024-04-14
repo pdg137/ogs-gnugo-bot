@@ -17,7 +17,7 @@ let
         {
            apikey: "${apikey}",
            bot: {
-             command: ["${random-move-bot}/bin/random-move-bot"]
+             command: ["${random-move-bot}"]
            },
            greeting: {
              en: "Hi! I am a bot powered by ${random-move-bot.name}, ${gtp2ogs.name}, and nixos-${builtins.substring 0 5 pkgs.lib.version}."
@@ -41,6 +41,6 @@ in
   {
     ogs-random-move-bot =
       pkgs.writeShellScript "ogs-random-move-bot" ''
-        ${gtp2ogs}/bin/gtp2ogs -c ${config} --beta
+        ${gtp2ogs}/bin/gtp2ogs -c ${config}
       '';
   }

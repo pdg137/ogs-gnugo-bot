@@ -18,6 +18,6 @@ let
 
 in
 
-  pkgs.writeScriptBin "random-move-bot-${version}" ''
+  pkgs.writeScript "random-move-bot-${version}" ''
     ${pkgs.python3}/bin/python3 ${source}/random-move-bot.py
   ''
