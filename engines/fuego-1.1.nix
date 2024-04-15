@@ -4,10 +4,8 @@
 # run to test the build.
 #
 # See: https://fuego.sourceforge.net/
-#
-# Usage: import fuego-1.1.nix (import <nixpkgs> {})
 
-pkgs:
+{pkgs ? (import <nixpkgs> {})}:
 let
 
   boost = pkgs.boost;

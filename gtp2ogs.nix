@@ -7,7 +7,7 @@
 # version string below as necessary. Make sure to clear out the hash
 # to force Nix to download new files and compute a new one.
 
-pkgs:
+{pkgs ? (import <nixpkgs> {})}:
 with pkgs;
 let
   version = "8.0.4";

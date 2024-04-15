@@ -4,10 +4,8 @@
 # is released someday.)
 #
 # See: https://www.gnu.org/software/gnugo/
-#
-# Usage: import gnugo-3.8.nix (import <nixpkgs> {})
 
-pkgs:
+{pkgs ? (import <nixpkgs> {})}:
 
 assert pkgs.gnugo.name == "gnugo-3.8";
 pkgs.gnugo

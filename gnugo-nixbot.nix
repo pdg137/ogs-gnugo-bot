@@ -4,8 +4,8 @@
 
 let
   pkgs = import <nixpkgs> {};
-  gtp2ogs = import ./gtp2ogs.nix pkgs;
-  gnugo = import ./engines/gnugo-3.8.nix pkgs;
+  gtp2ogs = import ./gtp2ogs.nix  {pkgs = pkgs;};
+  gnugo = import ./engines/gnugo-3.8.nix {pkgs = pkgs;};
   apikey = builtins.getEnv "APIKEY";
 
   config =
