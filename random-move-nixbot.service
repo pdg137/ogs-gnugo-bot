@@ -3,7 +3,7 @@ After=network.target
 
 [Service]
 User=paul
-ExecStart=/home/paul/gitprojects/public/ogs-gnugo-bot/fuego-nixbot
+ExecStart=/home/paul/gitprojects/public/ogs-gnugo-bot/random-move-nixbot
 Type=exec
 Restart=always
 RestartSec=5s
