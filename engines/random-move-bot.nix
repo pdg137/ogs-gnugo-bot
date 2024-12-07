@@ -7,13 +7,13 @@
 {pkgs ? (import <nixpkgs> {})}:
 
 let
-  version = "1.1";
+  version = "1.2";
 
   source = pkgs.fetchFromGitHub {
     owner = "pdg137";
     repo = "random-move-bot";
     rev = version;
-    hash = "sha256-Pv4bc569/rq9TQE1Z3VHK7472w4OqAoOLLCAuYycdBQ=";
+    hash = "sha256-o8iKHMx2tTd66SDB3A60M7vVfzqxlRi2/SrOR6ut+KI=";
   };
 
 in

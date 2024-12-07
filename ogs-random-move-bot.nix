@@ -4,7 +4,12 @@
 # APIKEY=<apikey> nix-build ogs-random-move-bot.nix -o ogs-random-move-bot
 
 let
-  pkgs = import <nixpkgs> {};
+  nixpkgs = fetchTarball {
+    url = "https://github.com/NixOS/nixpkgs/archive/f9f0d5c.tar.gz";
+    sha256 = "1nv2gvdzdqcrzac353yanm432cpbs5x18d9m7h529pj9hm5a0zqj";
+  };
+
+  pkgs = import nixpkgs {};
   gtp2ogs = import ./gtp2ogs.nix {pkgs = pkgs;};
   random-move-bot = import ./engines/random-move-bot.nix {pkgs = pkgs;};
   gnugo = import ./engines/gnugo-3.8.nix {pkgs = pkgs;};

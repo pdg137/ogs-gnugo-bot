@@ -11,7 +11,7 @@
 with pkgs;
 let
   version = "8.0.4";
-  hash = "sha256-UccWcFR/Pm6YQZ4SvY+VJmBr2b/iG1iYqz7UxsXYMFY=";
+  hash = "sha256-Sl4QDIyWX5S4o/+ySk2dDDk0hPCiGuOqCl1Xmsh46w8=";
 
   gtp2ogs-builder = runCommand "gtp2ogs-builder" {
     node2nix = node2nix;
