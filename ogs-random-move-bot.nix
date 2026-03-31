@@ -46,6 +46,6 @@ in
   {
     ogs-random-move-bot =
       pkgs.writeShellScript "ogs-random-move-bot" ''
-        ${gtp2ogs}/bin/gtp2ogs -c ${config} --beta
+        ${gtp2ogs}/bin/gtp2ogs -c ${config}
       '';
   }

@@ -10,8 +10,8 @@
 {pkgs ? (import <nixpkgs> {})}:
 with pkgs;
 let
-  version = "8.0.4";
-  hash = "sha256-Sl4QDIyWX5S4o/+ySk2dDDk0hPCiGuOqCl1Xmsh46w8=";
+  version = "9.0.1";
+  hash = "sha256-OvOoSnud3IP1vxIRHvoDwEW7N8L9Tg79SJEci2vCQtg=";
 
   gtp2ogs-builder = runCommand "gtp2ogs-builder" {
     node2nix = node2nix;
@@ -28,8 +28,8 @@ let
   } ''
     mkdir $out
     cd $out
-    echo $node2nix/bin/node2nix -i $package --pkg-name nodejs_18
-    $node2nix/bin/node2nix -i $package --pkg-name nodejs_18
+    echo $node2nix/bin/node2nix -i $package --pkg-name nodejs_24
+    $node2nix/bin/node2nix -i $package --pkg-name nodejs_24
   '';
 in
 (import gtp2ogs-builder.outPath {})."gtp2ogs-${version}"
