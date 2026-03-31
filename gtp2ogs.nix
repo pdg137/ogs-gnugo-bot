@@ -11,7 +11,7 @@
 with pkgs;
 let
   version = "9.0.1";
-  hash = "sha256-OvOoSnud3IP1vxIRHvoDwEW7N8L9Tg79SJEci2vCQtg=";
+  hash = "sha256-t8Ir/MK9LQJOz24FnfmlqyvlWosOaTOFLuIBmVDpTeI=";
 
   gtp2ogs-builder = runCommand "gtp2ogs-builder" {
     node2nix = node2nix;
@@ -28,8 +28,8 @@ let
   } ''
     mkdir $out
     cd $out
-    echo $node2nix/bin/node2nix -i $package --pkg-name nodejs_24
-    $node2nix/bin/node2nix -i $package --pkg-name nodejs_24
+    echo $node2nix/bin/node2nix -i $package --pkg-name nodejs_20
+    $node2nix/bin/node2nix -i $package --pkg-name nodejs_20
   '';
 in
 (import gtp2ogs-builder.outPath {})."gtp2ogs-${version}"
