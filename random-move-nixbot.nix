@@ -30,7 +30,7 @@ let
            ending_bot: {
              command: ["${gnugo}/bin/gnugo", "--mode", "gtp"],
              moves_to_allow_before_checking_ratio: 0.2,
-             allowed_resigns: 1,
+             allowed_resigns: 10,
              send_chats: false
            },
            farewell: {
