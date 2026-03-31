@@ -5,10 +5,8 @@
 
 let
   # nixos-25.11 from 2026-03-05:
-  nixpkgs = pinTarballGithub {
-    version = "fabb8c9d";
-    owner = "NixOS";
-    name = "nixpkgs";
+  nixpkgs = fetchTarball {
+    url = "https://github.com/NixOS/nixpkgs/archive/fabb8c9d.tar.gz";
     sha256 = "15gvdgdqsxjjihq1r66qz1q97mlcaq1jbpkhbx287r5py2vy38b1";
   };
   pkgs = (import nixpkgs {});

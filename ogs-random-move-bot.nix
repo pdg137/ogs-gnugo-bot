@@ -4,11 +4,11 @@
 # APIKEY=<apikey> nix-build ogs-random-move-bot.nix -o ogs-random-move-bot
 
 let
+  # nixos-25.11 from 2026-03-05:
   nixpkgs = fetchTarball {
-    url = "https://github.com/NixOS/nixpkgs/archive/f9f0d5c.tar.gz";
-    sha256 = "1nv2gvdzdqcrzac353yanm432cpbs5x18d9m7h529pj9hm5a0zqj";
+    url = "https://github.com/NixOS/nixpkgs/archive/fabb8c9d.tar.gz";
+    sha256 = "15gvdgdqsxjjihq1r66qz1q97mlcaq1jbpkhbx287r5py2vy38b1";
   };
-
   pkgs = import nixpkgs {};
   gtp2ogs = import ./gtp2ogs.nix {pkgs = pkgs;};
   random-move-bot = import ./engines/random-move-bot.nix {pkgs = pkgs;};
@@ -46,6 +46,6 @@ in
   {
     ogs-random-move-bot =
       pkgs.writeShellScript "ogs-random-move-bot" ''
-        ${gtp2ogs}/bin/gtp2ogs -c ${config}
+        ${gtp2ogs}/bin/gtp2ogs -c ${config} --beta
       '';
   }
